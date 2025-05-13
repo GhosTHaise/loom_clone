@@ -17,10 +17,10 @@ const Navbar = () => {
               user && (
                 <figure>
                   <button title='Profile'>
-                    <Image src="/assets/icons/dummy.jpg" alt='User' width={36} height={36} className='rounded-full aspect-square' />
+                    <Image src="/assets/images/dummy.jpg" alt='User' width={36} height={36} className='rounded-full aspect-square' />
                   </button>
                   <button title='logout' className='cursor-pointer'>
-                    <Image src="/assets/icons/lagout.svg" alt='logout' width={24} height={24} />
+                    <Image src="/assets/icons/logout.svg" alt='logout' width={24} height={24} />
                   </button>
                 </figure>
               )
