@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Fitiavana-Sambatra-s-workspace-657286.eu-central-1.xata.sh/db/ghost_snapcast",
+  "codegen": {
+    "output": "src/xata.ts"
+  }
+}
