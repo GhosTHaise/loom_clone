@@ -3,7 +3,6 @@ import React from 'react'
 const FormField = ({
   id,
   label,
-  type = "text",
   value,
   onChange,
   placeholder,
@@ -17,6 +16,7 @@ const FormField = ({
         name={id}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
       />
     } else if (type === "select") {
       return <select
@@ -26,7 +26,7 @@ const FormField = ({
         onChange={onChange}
       >
         {
-          options.map(({label , value}) => (
+          options.map(({ label, value }) => (
             <option key={label} value={value}>{label}</option>
           ))
         }
@@ -37,6 +37,8 @@ const FormField = ({
         name={id}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
+        type={type}
       />
     }
   }
