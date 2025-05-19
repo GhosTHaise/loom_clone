@@ -11,10 +11,10 @@ const UploadPage = () => {
     })
     const [error, setError] = useState<string | null>(null)
 
-    const handleInputChange = (e : ChangeEvent) => {
+    const handleInputChange = (e: ChangeEvent) => {
         const { name, value } = e.target
 
-        setFormData((prev) => ({...prev, [name]: value}))
+        setFormData((prev) => ({ ...prev, [name]: value }))
     }
 
     return (
@@ -30,7 +30,27 @@ const UploadPage = () => {
                     onChange={handleInputChange}
                     placeholder="Enter a clear and concise video title"
                 />
+                <FormField
+                    id="description"
+                    label="Description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    placeholder="Describe what this video is about"
+                    as="textarea"
+                />
                 <FileInput />
+                <FileInput />
+                <FormField
+                    id="visibility"
+                    label="Visibility"
+                    value={formData.visibility}
+                    onChange={handleInputChange}
+                    options={[
+                        {value : "public", label : "Public"},
+                        {value : "private", label : "Private"}
+                    ]}
+                    as="select"
+                />
             </form>
         </div>
     )
