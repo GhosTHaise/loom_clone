@@ -9,6 +9,10 @@ const UploadPage = () => {
         description: "",
         visibility: "public"
     })
+
+    const video = {};
+    const thumbnail = {};
+
     const [error, setError] = useState<string | null>(null)
 
     const handleInputChange = (e: ChangeEvent) => {
@@ -38,16 +42,36 @@ const UploadPage = () => {
                     placeholder="Describe what this video is about"
                     as="textarea"
                 />
-                <FileInput />
-                <FileInput />
+                <FileInput
+                    id="video"
+                    label="Video"
+                    accept="video/*"
+                    file={video.file}
+                    previewUrl={video.previewUrl}
+                    inputRef={video.inputRef}
+                    onChange={video.onChange}
+                    onReset={video.resetFile}
+                    type="video"
+                />
+                <FileInput
+                    id="thumbnail"
+                    label="Thumbnail"
+                    accept="image/*"
+                    file={thumbnail.file}
+                    previewUrl={thumbnail.previewUrl}
+                    inputRef={thumbnail.inputRef}
+                    onChange={thumbnail.onChange}
+                    onReset={thumbnail.resetFile}
+                    type="image"
+                />
                 <FormField
                     id="visibility"
                     label="Visibility"
                     value={formData.visibility}
                     onChange={handleInputChange}
                     options={[
-                        {value : "public", label : "Public"},
-                        {value : "private", label : "Private"}
+                        { value: "public", label: "Public" },
+                        { value: "private", label: "Private" }
                     ]}
                     as="select"
                 />
