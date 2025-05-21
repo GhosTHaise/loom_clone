@@ -3,9 +3,10 @@ import FileInput from '@/components/file-input'
 import FormField from '@/components/form-field'
 import { MAX_THUMBNAIL_SIZE, MAX_VIDEO_SIZE } from '@/constants'
 import { useFileInput } from '@/lib/hooks/useFileInput'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 const UploadPage = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -15,12 +16,38 @@ const UploadPage = () => {
     const video = useFileInput(MAX_VIDEO_SIZE);
     const thumbnail = useFileInput(MAX_THUMBNAIL_SIZE);
 
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string>("")
 
-    const handleInputChange = (e: ChangeEvent) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
 
         setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        setIsSubmitting(true);
+
+        try {
+            if(!video.file || !thumbnail.file) {
+                setError("Please upload both video and thumbnail files.");
+                return;
+            }
+
+            if(!formData.title || !formData.description) {
+                setError("Please fill in all the details.");
+            }
+
+            //upload the video to Bunny
+            //Upload the thumbnail to DB
+            //Atatch the thumbnail
+            //Create a new DB entry fot the video details (urls, data)
+        } catch (error) {
+            console.error("Error submitting form: ", error);
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
@@ -28,7 +55,10 @@ const UploadPage = () => {
             <h1>Upload a Video</h1>
             {error && <div className='error-field'>{error}</div>}
 
-            <form className="ronuded-20 shadow-10 gap-6 w-full flex-flex-col px-5 py-7 5">
+            <form
+                className="rounded-20 shadow-10 gap-6 w-full flex flex-col px-5 py-7 5"
+                onSubmit={handleSubmit}
+            >
                 <FormField
                     id="title"
                     label="Title"
@@ -77,6 +107,17 @@ const UploadPage = () => {
                     ]}
                     as="select"
                 />
+
+                <button
+                    title="Create Video"
+                    type="submit"
+                    disabled={isSubmitting}
+                    className='submit-button'
+                >
+                    {
+                        isSubmitting ? "Uploading ..." : "Upload video"
+                    }
+                </button>
             </form>
         </div>
     )
