@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-export const useFileINput = (maxSize: number) => {
+export const useFileInput = (maxSize: number) => {
     const [file, setFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>("");
     const [duration, setDuration] = useState<number | null>(0);
@@ -54,7 +54,7 @@ export const useFileINput = (maxSize: number) => {
         file,
         previewUrl,
         duration,
-        handleFileChange,
+        onChange : handleFileChange,
         resetFile,
         inputRef
     }

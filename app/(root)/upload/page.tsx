@@ -1,6 +1,8 @@
 "use client"
 import FileInput from '@/components/file-input'
 import FormField from '@/components/form-field'
+import { MAX_THUMBNAIL_SIZE, MAX_VIDEO_SIZE } from '@/constants'
+import { useFileInput } from '@/lib/hooks/useFileInput'
 import { ChangeEvent, useState } from 'react'
 
 const UploadPage = () => {
@@ -10,8 +12,8 @@ const UploadPage = () => {
         visibility: "public"
     })
 
-    const video = {};
-    const thumbnail = {};
+    const video = useFileInput(MAX_VIDEO_SIZE);
+    const thumbnail = useFileInput(MAX_THUMBNAIL_SIZE);
 
     const [error, setError] = useState<string | null>(null)
 
