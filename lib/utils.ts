@@ -1,13 +1,13 @@
-//import { type ClassValue, clsx } from "clsx";
-//import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { ilike, sql } from "drizzle-orm";
 //import { videos } from "@/drizzle/schema";
 import { DEFAULT_VIDEO_CONFIG, DEFAULT_RECORDING_CONFIG } from "@/constants";
 
-/* export function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
- */
+
 export const updateURLParams = (
   currentParams: URLSearchParams,
   updates: Record<string, string | null | undefined>,
