@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { BUNNY } from "@/constants";
 import { db } from "@/drizzle/db";
+import { videos } from "@/drizzle/schema";
 
 const VIDEO_STREAM_BASE_URL = BUNNY.STREAM_BASE_URL;
 const THUMBNAIL_STORAGE_BASE_URL = BUNNY.STORAGE_BASE_URL;
@@ -80,5 +81,11 @@ export const saveVideoDetails = withErrorHandling(async (videoDetails : VideoDet
         }
     );
 
-    //await db.insert(videos).values({});
+    await db.insert(videos).values({
+        ...videoDetails,
+        videoUrl : `${BUNNY.EMBED_URL}/${BUNNY_LIBRARY_ID}/${videoDetails.videoId}`,
+        userId,
+        createdAt : new Date(),
+        updatedAt : new Date()
+    });
 })
