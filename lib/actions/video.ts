@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { BUNNY } from "@/constants";
 import { db } from "@/drizzle/db";
 import { videos } from "@/drizzle/schema";
+import { revalidatePath } from "next/cache";
 
 const VIDEO_STREAM_BASE_URL = BUNNY.STREAM_BASE_URL;
 const THUMBNAIL_STORAGE_BASE_URL = BUNNY.STORAGE_BASE_URL;
@@ -24,6 +25,10 @@ const getSessionUserId = async () : Promise<string> => {
     if(!session) throw new Error("Unauthenticated");
 
     return session.user.id;
+}
+
+const revalidatePaths = (paths : string[]) => {
+    paths.forEach((path) => revalidatePath(path));
 }
 
 // Server Actions
@@ -88,4 +93,8 @@ export const saveVideoDetails = withErrorHandling(async (videoDetails : VideoDet
         createdAt : new Date(),
         updatedAt : new Date()
     });
+
+    revalidatePaths(["/"]);
+
+    return { videoId : videoDetails.videoId }
 })
