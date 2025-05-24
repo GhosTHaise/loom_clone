@@ -11,8 +11,8 @@ const THUMBNAIL_CDN_URL = BUNNY.CDN_URL;
 const BUNNY_LIBRARY_ID = getEnv("BUNNY_LIBRARY_ID");
 
 const ACCESS_KEYS = {
-    streamAccessKey = getEnv("BUNNY_STREAM_ACCESS_KEY"),
-    storageAccessKey = getEnv("BUNNY_STORAGE_ACCESS_KEY"),
+    streamAccessKey : getEnv("BUNNY_STREAM_ACCESS_KEY"),
+    storageAccessKey : getEnv("BUNNY_STORAGE_ACCESS_KEY"),
 };
 
 // Helper Functions
@@ -50,5 +50,15 @@ export const getVideoUploadUrl = withErrorHandling(async () => {
 })
 
 export const getThumbnailUploadUrl = withErrorHandling(async (videoId : string) => {
+    const fileName = `${Date.now()}-${videoId}-thumbnail`;
 
+    const uploadUrl = `${THUMBNAIL_STORAGE_BASE_URL}/thumbnails/${fileName}`;
+
+    const cdnUrl = `${THUMBNAIL_CDN_URL}/thumbnails/${fileName}`;
+
+    return {
+        uploadUrl,
+        cdnUrl,
+        accessKey  :ACCESS_KEYS.storageAccessKey
+    }
 })
