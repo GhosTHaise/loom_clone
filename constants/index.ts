@@ -3,7 +3,7 @@ export const MAX_THUMBNAIL_SIZE = 10 * 1024 * 1024;
 
 export const BUNNY = {
   STREAM_BASE_URL: "https://video.bunnycdn.com/library",
-  STORAGE_BASE_URL: "https://sg.storage.bunnycdn.com/ghost-snapcast",
+  STORAGE_BASE_URL: "https://storage.bunnycdn.com/ghost-snapcast",
   CDN_URL: "https://ghost-snapcast.b-cdn.net",
   EMBED_URL: "https://iframe.mediadelivery.net/embed",
   TRANSCRIPT_URL: "https://vz-689720fa-9a6.b-cdn.net",

@@ -66,7 +66,7 @@ export const getThumbnailUploadUrl = withErrorHandling(async (videoId : string) 
     return {
         uploadUrl,
         cdnUrl,
-        accessKey  :ACCESS_KEYS.storageAccessKey
+        accessKey : ACCESS_KEYS.storageAccessKey
     }
 })
 
