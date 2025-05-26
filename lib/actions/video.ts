@@ -130,7 +130,7 @@ export const saveVideoDetails = withErrorHandling(async (videoDetails: VideoDeta
 })
 
 // /?searchQuery=test
-export const getAllVideo = withErrorHandling(async (
+export const getAllVideos = withErrorHandling(async (
     searchQuery: string = "",
     sorterFilter?: string,
     pageNumber: number = 1,
