@@ -116,7 +116,7 @@ export const saveVideoDetails = withErrorHandling(async (videoDetails: VideoDeta
         }
     );
 
-    await db.insert(videos).values({
+    const response  = await db.insert(videos).values({
         ...videoDetails,
         videoUrl: `${BUNNY.EMBED_URL}/${BUNNY_LIBRARY_ID}/${videoDetails.videoId}`,
         userId,
@@ -124,6 +124,9 @@ export const saveVideoDetails = withErrorHandling(async (videoDetails: VideoDeta
         updatedAt: new Date()
     });
 
+    console.log(response);
+
+    console.log("🚀 ~ saveVideoDetails ~ videoDetails:", videoDetails)
     revalidatePaths(["/"]);
 
     return { videoId: videoDetails.videoId }
