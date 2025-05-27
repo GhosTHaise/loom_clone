@@ -17,7 +17,17 @@ const Page = async ({ searchParams }: SearchParams) => {
         videos?.length > 0 ?
           (
             <section className="video-grid">
-              {videos[0].video.title}
+              {
+                videos.map(({videos, user}) => (
+                  <VideoCard 
+                    key={videos.id}
+                    {...videos}
+                    thumbnail={videos.thumbnailUrl}
+                    userImg={user?.image || ""}
+                    username={user?.name || "Guest"}
+                  />
+                ))
+              }
             </section>
           ) : (
             <EmptyState
