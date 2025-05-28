@@ -91,7 +91,7 @@ const UploadPage = () => {
                 videoId,
                 thumbnailUrl: thumbnailCdnUrl,
                 ...formData,
-                duration: videoDuration,
+                duration: Math.ceil(videoDuration),
             })
 
             router.push(`/videos/${videoId}`);

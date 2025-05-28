@@ -51,12 +51,12 @@ const validateWithArcjet = async (fingerprint: string) => {
 
 const buildVideoWithUserQUery = () => {
     return db
-    .select({
-        videos : videos,
-        user : { id : user.id , name : user.name, image : user.image }
-    })
-    .from(videos)
-    .leftJoin(user, eq(videos.userId, user.id))
+        .select({
+            videos: videos,
+            user: { id: user.id, name: user.name, image: user.image }
+        })
+        .from(videos)
+        .leftJoin(user, eq(videos.userId, user.id))
 }
 
 // Server Actions
@@ -98,39 +98,41 @@ export const getThumbnailUploadUrl = withErrorHandling(async (videoId: string) =
     }
 })
 
-export const saveVideoDetails = withErrorHandling(async (videoDetails: VideoDetails) => {
-    const userId = await getSessionUserId();
+export const saveVideoDetails = withErrorHandling(
+    async (videoDetails: VideoDetails) => {
 
-    await validateWithArcjet(userId);
-
-    await apiFetch(
-        `${VIDEO_STREAM_BASE_URL}/${BUNNY_LIBRARY_ID}/videos/${videoDetails.videoId}`,
-        {
-            method: "POST",
-            bunnyType: "stream",
-            body: {
-                title: videoDetails.title,
-                description: videoDetails.description,
-
+        const userId = await getSessionUserId();
+        await validateWithArcjet(userId);
+        await apiFetch(
+            `${VIDEO_STREAM_BASE_URL}/${BUNNY_LIBRARY_ID}/videos/${videoDetails.videoId}`,
+            {
+                method: "POST",
+                bunnyType: "stream",
+                body: {
+                    title: videoDetails.title,
+                    description: videoDetails.description,
+                },
             }
+        );
+
+        const now = new Date();
+        try {
+            await db.insert(videos).values({
+                ...videoDetails,
+                videoUrl: `${BUNNY.EMBED_URL}/${BUNNY_LIBRARY_ID}/${videoDetails.videoId}`,
+                userId,
+                createdAt: now,
+                updatedAt: now,
+            });
+        } catch (error) {
+            console.log("🚀 ~ error:", error)
+
         }
-    );
 
-    const response  = await db.insert(videos).values({
-        ...videoDetails,
-        videoUrl: `${BUNNY.EMBED_URL}/${BUNNY_LIBRARY_ID}/${videoDetails.videoId}`,
-        userId,
-        createdAt: new Date(),
-        updatedAt: new Date()
-    });
-
-    console.log(response);
-
-    console.log("🚀 ~ saveVideoDetails ~ videoDetails:", videoDetails)
-    revalidatePaths(["/"]);
-
-    return { videoId: videoDetails.videoId }
-})
+        revalidatePaths(["/"]);
+        return { videoId: videoDetails.videoId };
+    }
+);
 
 // /?searchQuery=test
 export const getAllVideos = withErrorHandling(async (
@@ -156,37 +158,38 @@ export const getAllVideos = withErrorHandling(async (
         :
         canSeeTheVideos;
 
-    const [{ totalCount}] = await db
-    .select({totalCount : sql<number>`COUNT(*)`})
-    .from(videos)
-    .where(whereCondition)
+    const [{ totalCount }] = await db
+        .select({ totalCount: sql<number>`COUNT(*)` })
+        .from(videos)
+        .where(whereCondition)
 
     const totalVideos = Number(totalCount || 0);
     const totalPages = Math.ceil(totalVideos / pageSize);
 
-    const videoRecords = await 
-    buildVideoWithUserQUery()
-    .where(whereCondition)
-    .orderBy(
-        sorterFilter ? getOrderByClause(sorterFilter) : sql`${videos.createdAt} DESC`
-    )
-    .limit(pageSize)
-    .offset((pageNumber - 1) * pageSize);
+    const videoRecords = await
+        buildVideoWithUserQUery()
+            .where(whereCondition)
+            .orderBy(
+                sorterFilter ? getOrderByClause(sorterFilter) : sql`${videos.createdAt} DESC`
+            )
+            .limit(pageSize)
+            .offset((pageNumber - 1) * pageSize);
 
     return {
-        videos : videoRecords,
-        pagination : {
-            currentPage : pageNumber,
-            totalPages : totalPages,
-            totalVideos : totalVideos,
+        videos: videoRecords,
+        pagination: {
+            currentPage: pageNumber,
+            totalPages: totalPages,
+            totalVideos: totalVideos,
             pageSize
         }
     }
 })
 
 export const getVideoById = withErrorHandling(async (videoId: string) => {
-  const [videoRecord] = await buildVideoWithUserQUery().where(
-    eq(videos.videoId, videoId)
-  );
-  return videoRecord;
+    const [videoRecord] = await buildVideoWithUserQUery().where(
+        eq(videos.videoId, videoId)
+    );
+    console.log("🚀 ~ getVideoById ~ videoRecord:", videoRecord)
+    return videoRecord;
 });

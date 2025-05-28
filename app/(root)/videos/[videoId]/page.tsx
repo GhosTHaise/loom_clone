@@ -6,13 +6,13 @@ import React from 'react'
 const Page =async ({ params } : Params) => {
   const { videoId } = await params;
 
-  const { user , video } = await getVideoById(videoId);
+  const { user , videos } = await getVideoById(videoId);
 
-  if(!video) notFound();
+  if(!videos) notFound();
 
   return (
     <main className="wrapper page">
-        <VideoPlayer videoId={video.id} />
+        <VideoPlayer videoId={videos.id} />
     </main>
   )
 }
