@@ -1,3 +1,4 @@
+import VideoDetailHeader from '@/components/video-detail-header';
 import VideoPlayer from '@/components/video-player';
 import { getVideoById } from '@/lib/actions/video';
 import { notFound } from 'next/navigation';
@@ -12,6 +13,12 @@ const Page = async ({ params }: Params) => {
 
   return (
     <main className="wrapper page">
+      <VideoDetailHeader
+        {...videos}
+        userImg={user?.image}
+        username={user?.name || "Guest"}
+        ownerId={videos.userId}
+      />
       <h1 className="text-2xl">{videos.title}</h1>
       <section className="video-details">
         <div className="content">

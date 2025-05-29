@@ -1,13 +1,15 @@
 "use client"
+import { authClient } from '@/lib/auth-clients';
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
-const user = {};
-
 const Navbar = () => {
   const router = useRouter()
+  const {data : session} = authClient.useSession();
+  const user = session?.user;
+
   return (
     <header className='navbar'>
         <nav>
@@ -19,8 +21,8 @@ const Navbar = () => {
             {
               user && (
                 <figure>
-                  <button onClick={() => router.push("/profile/id")} title='Profile'>
-                    <Image src="/assets/images/dummy.jpg" alt='User' width={36} height={36} className='rounded-full aspect-square' />
+                  <button onClick={() => router.push(`/profile/${user.id}`)} title='Profile'>
+                    <Image src={user.image ?? ""} alt='User' width={36} height={36} className='rounded-full aspect-square' />
                   </button>
                   <button title='logout' className='cursor-pointer'>
                     <Image src="/assets/icons/logout.svg" alt='logout' width={24} height={24} />
