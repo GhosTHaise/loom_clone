@@ -4,7 +4,6 @@ import Link from 'next/link'
 import React from 'react'
 
 const VideoCard = ({
-    id,
     title,
     thumbnail,
     createdAt,
@@ -12,11 +11,12 @@ const VideoCard = ({
     username,
     views,
     visibility,
-    duration
+    duration,
+    videoId
 }: VideoCardProps) => {
     return (
         <Link
-            href={`/videos/${id}`}
+            href={`/videos/${videoId}`}
             className="video-card">
             <Image src={thumbnail} alt='thumbnail' width={290} height={160} className='thumbnail' />
             <article>

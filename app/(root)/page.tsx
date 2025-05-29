@@ -1,7 +1,6 @@
 import EmptyState from '@/components/empty-state'
 import Header from '@/components/header'
 import VideoCard from '@/components/video-card'
-import { dummyCards } from '@/constants'
 import { getAllVideos } from '@/lib/actions/video'
 import React from 'react'
 

@@ -1,8 +1,18 @@
+import { createIframeLink } from '@/lib/utils'
 import React from 'react'
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
   return (
-    <div>VideoPlayer</div>
+    <div className="video-player">
+      <iframe
+        src={createIframeLink(videoId)}
+        loading='lazy'
+        title="Video player"
+        style={{ border: 0, zIndex: 50 }}
+        allowFullScreen
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+      />
+    </div>
   )
 }
 
