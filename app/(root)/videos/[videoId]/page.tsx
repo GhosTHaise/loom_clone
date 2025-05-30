@@ -19,7 +19,6 @@ const Page = async ({ params }: Params) => {
         username={user?.name || "Guest"}
         ownerId={videos.userId}
       />
-      <h1 className="text-2xl">{videos.title}</h1>
       <section className="video-details">
         <div className="content">
           <VideoPlayer videoId={videos.videoId} />
