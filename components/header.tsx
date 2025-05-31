@@ -1,8 +1,8 @@
-import { ICONS } from '@/constants'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import DropdownList from './dropdown-list'
+import ScreenRecorder from './screen-recorder'
 
 const Header = ({ subHeader, title, userImg }: SharedHeaderProps) => {
     return (
@@ -31,12 +31,7 @@ const Header = ({ subHeader, title, userImg }: SharedHeaderProps) => {
                         <Image src="/assets/icons/upload.svg" alt='Upload' width={16} height={16} />
                         <span>Upload a video</span>
                     </Link>
-                    <div className="record">
-                        <button title='record' className='primary-btn'>
-                            <Image src={ICONS.record} alt='record' width={16} height={16} />
-                            <span>Record a video</span>
-                        </button>
-                    </div>
+                    <ScreenRecorder />
                 </aside>
             </section>
             <section className='search-filter'>
