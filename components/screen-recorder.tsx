@@ -38,6 +38,10 @@ const ScreenRecorder = () => {
         }
     }
 
+    const goToUpload = () => {
+        // router.push('/upload')
+    }
+
     return (
         <div className="record">
             <button
@@ -52,44 +56,66 @@ const ScreenRecorder = () => {
             {
                 isOpen && (
                     <section className='dialog'>
-                        <div className="overlay-record" onClick={handleClose}>
-                            <div className="dialog-content">
-                                <figure>
-                                    <h3>Screen Recording</h3>
-                                    <button onClick={handleClose}>
-                                        <Image src={ICONS.close} alt='close' width={20} height={20} />
+                        <div className="overlay-record" onClick={handleClose} />
+                        <div className="dialog-content">
+                            <figure>
+                                <h3>Screen Recording</h3>
+                                <button onClick={handleClose}>
+                                    <Image src={ICONS.close} alt='close' width={20} height={20} />
+                                </button>
+                            </figure>
+                            <section>
+                                {
+                                    isRecording ? (
+                                        <article>
+                                            <div />
+                                            <span>Recording in progress</span>
+                                        </article>
+                                    ) : recordedVideoUrl ? (
+                                        <video ref={videoRef} controls />
+                                    ) : (
+                                        <p>Click record to start capturing your screen</p>
+                                    )
+                                }
+                            </section>
+                            <div className="record-box">
+                                {!isRecording && !recordedVideoUrl && (
+                                    <button onClick={handleStart} className='record-start'>
+                                        <Image src={ICONS.record} alt='record' width={16} height={16} />
+                                        Record
                                     </button>
-                                </figure>
-                                <section>
-                                    {
-                                        isRecording ? (
-                                            <article>
-                                                <div />
-                                                <span>Recording in progress</span>
-                                            </article>
-                                        ) : recordedVideoUrl ? (
-                                            <video ref={videoRef} controls />
-                                        ) : (
-                                            <p>Click record to start capturing your screen</p>
-                                        )
-                                    }
-                                </section>
-                                <div className="record-box">
-                                    {!isRecording && !recordedVideoUrl && (
-                                        <button onClick={handleStart} className='record-start'>
+                                )}
+                                {
+                                    isRecording && (
+                                        <button onClick={stopRecording} className='record-stop'>
                                             <Image src={ICONS.record} alt='record' width={16} height={16} />
-                                            Record
+                                            Stop recording
                                         </button>
-                                    )}
-                                    {
-                                        isRecording && (
-                                            <button onClick={stopRecording} className='record-stop'>
-                                                <Image src={ICONS.record} alt='record' width={16} height={16} />
-                                                Stop recording
+                                    )
+                                }
+                                {
+                                    recordedVideoUrl && (
+                                        <>
+                                            <button
+                                                className='record-again'
+                                                onClick={recordAgain}>
+                                                Record again
                                             </button>
-                                        )
-                                    }
-                                </div>
+                                            <button
+                                                onClick={goToUpload}
+                                                className='record-upload'
+                                            >
+                                                <Image
+                                                    src={ICONS.upload}
+                                                    alt='upload'
+                                                    width={16}
+                                                    height={16}
+                                                />
+                                                Continue to upload
+                                            </button>
+                                        </>
+                                    )
+                                } 
                             </div>
                         </div>
                     </section>
