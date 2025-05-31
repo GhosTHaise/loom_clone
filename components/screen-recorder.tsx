@@ -39,7 +39,22 @@ const ScreenRecorder = () => {
     }
 
     const goToUpload = () => {
-        // router.push('/upload')
+        if(!recordedBlob) return
+
+        const url = URL.createObjectURL(recordedBlob);
+
+        sessionStorage.setItem('recordedvideo', 
+            JSON.stringify({
+                url,
+                name : "screen-recorded-webm",
+                type : recordedBlob.type,
+                size :  recordedBlob.size, 
+                duration: recordingDuration || 0
+            })
+        );
+
+        router.push('/upload')
+        handleClose()
     }
 
     return (
@@ -72,7 +87,7 @@ const ScreenRecorder = () => {
                                             <span>Recording in progress</span>
                                         </article>
                                     ) : recordedVideoUrl ? (
-                                        <video ref={videoRef} controls />
+                                        <video ref={videoRef} src={recordedVideoUrl} controls />
                                     ) : (
                                         <p>Click record to start capturing your screen</p>
                                     )
