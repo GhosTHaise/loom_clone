@@ -43,7 +43,7 @@ const ScreenRecorder = () => {
 
         const url = URL.createObjectURL(recordedBlob);
 
-        sessionStorage.setItem('recordedvideo', 
+        sessionStorage.setItem('recordedVideo', 
             JSON.stringify({
                 url,
                 name : "screen-recorded-webm",

@@ -43,6 +43,7 @@ const UploadPage = () => {
         const checkForRecordedVideo = async () => {
             try {
                 const stored = sessionStorage.getItem("recordedVideo");
+                console.log("🚀 ~ checkForRecordedVideo ~ stored:", stored)
                 if(!stored) return;
 
                 const { url , name , type , duration } = JSON.parse(stored);
