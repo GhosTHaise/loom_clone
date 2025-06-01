@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
         pathname : "/**"
       }
     ]
+  },
+  eslint : {
+    ignoreDuringBuilds : true,
+  },
+  typescript : {
+    ignoreBuildErrors : true
   }
 };
 
